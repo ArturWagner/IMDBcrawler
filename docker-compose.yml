@@ -1,0 +1,19 @@
+mongodb:
+  image: mongo
+  ports:
+    - "27017:27017"  
+
+mongo-seed:
+  build: ./crawler
+  links:
+    - mongodb
+
+web:
+  build: .
+  command: python -u app.py
+  ports:
+    - "5000:5000"
+  volumes:
+    - .:/imdb
+  links:
+    - mongodb
